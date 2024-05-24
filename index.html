@@ -1,0 +1,123 @@
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>AdventurePuzzle</title>
+  <script type="module" src="gameLogic/index.ts"></script>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-y: hidden;
+    }
+
+    .box {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      border: 1px solid black;
+    }
+
+    .spoiler {
+      background-color: #333;
+      color: #333;
+      padding: 5px;
+    }
+
+    .spoiler:hover {
+      color: white;
+    }
+
+    p {
+      max-width: 800px;
+    }
+
+    .sprite {
+      width: 20px;
+      height: 20px;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .column {
+      flex: 50%;
+    }
+
+    ul {
+      list-style: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="row">
+    <div class="column">
+      <canvas width="600" height="400" id="GameCanvas"></canvas>
+    </div>
+    <div class="column">
+      <h3>How to play</h3>
+      <p>The user controls the player square using the arrow keys.</p>
+      <ul>
+        <li>
+          <span><img class="sprite" src="./gameArt/player.png" alt="" id="playerSprite"></span> This is the
+          <b>player</b>.
+        </li>
+        <li>
+          <span><img class="sprite" src="./gameArt/box.png" alt="" id="boxSprite"></span> These squares are
+          <b>boxes</b>.
+        </li>
+        <li>
+          <span><img class="sprite" src="./gameArt/rock.png" alt="" id="rockSprite"></span> These squares are
+          <b>rocks</b>.
+        </li>
+        <li>
+          <span>
+            <img class="sprite" src="./gameArt/cactus1.png" alt="" id="keySprite">
+          </span> These squares are a <b>cactus</b>
+        </li>
+        <li>
+          <span>
+            <img class="sprite" src="./gameArt/skeleton.png" alt="" id="lockSprite">
+          </span> These squares are <b>skeletons</b>
+        </li>
+        <li>
+          <span><img class="sprite" src="./gameArt/sand.png" alt="" id="sandSprite"></span> These squares are called
+          <b>sand</b>.
+        </li>
+        <li>
+          <span><img class="sprite" src="./gameArt/wall.png" alt="" id="wallSprite"></span> These squares are
+          <b>walls</b>.
+        </li>
+        <li><span class="box"></span> White squares are <b>air</b> (empty).</li>
+      </ul>
+
+      <p>
+        If a box or rock is not supported by anything, it falls. The player can push one rock or box
+        at a time, provided it is not obstructed or falling. The path between the box and the
+        lower-right corner is initially obstructed by a skeleton, so the player has to get a cactus to remove
+        it. Sand can be "eaten" (removed) by the player by stepping on it.
+      </p>
+
+      <h3>How to win</h3>
+      <p>The objective of the game is to get the box to the lower-right corner, like this:</p>
+      <img src="/gameArt/goal.png" width="300" />
+
+      <p>
+        Solution (put your cursor here):
+        <span class="spoiler">
+          &nbsp; &rarr; &rarr; &rarr; &darr; &nbsp; &nbsp; &darr; &darr; &larr; &uarr; &nbsp; &nbsp;
+          &darr; &larr; &rarr; &uarr; &nbsp; &nbsp; &larr; &larr; &rarr; &rarr; &nbsp; &nbsp; &darr;
+          &rarr; &rarr; &nbsp;
+        </span>
+      </p>
+      <p>
+        Special thanks to <a href="https://www.gameart2d.com/"><b>Game Art 2D</b></a> for the free game art.
+      </p>
+    </div>
+  </div>
+</body>
+
+</html>
