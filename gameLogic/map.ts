@@ -1,3 +1,4 @@
+import { Direction, Movement } from "./gameConstants"
 import { Tile } from "./tile"
 import { TileCreator } from "./tileCreator"
 
@@ -9,6 +10,7 @@ const rawMap: string[][] = [
   ['w', 'r', 's', 's', 's', 'l', 'a', 'w'],
   ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
 ]
+
 export class Map {
   private tileCreator: TileCreator
   private map: Tile[][] // Update this to be Tile[][]
@@ -36,6 +38,15 @@ export class Map {
 
   public setTileAtPosition(x: number, y: number, tile: Tile) {
     this.map[y][x] = tile
+  }
+
+  public tileCanBeMovedTo(x: number, y: number, direction: Direction, movement: Movement): boolean {
+    const tileToMoveTo = this.map[y][x]
+    return tileToMoveTo.canBeMovedTo(x, y, this, direction, movement)
+  }
+
+  public getTileAtPosition(x: number, y: number) {
+    return this.map[y][x]
   }
 
   public getPositionOfUniqueTile(rawTileType: string) {

@@ -19,9 +19,11 @@ export class Player {
     const newX = input.direction === Direction.Horizontal ? this.x + input.movement : this.x
     const newY = input.direction === Direction.Vertical ? this.y + input.movement : this.y
 
-    map.setTileAtPosition(this.x, this.y, new AirTile())
-    this.setNewPosition(newX, newY)
-    map.setTileAtPosition(this.x, this.y, new PlayerTile())
+    if (map.tileCanBeMovedTo(newX, newY, input.direction, input.movement)) {
+      map.setTileAtPosition(this.x, this.y, new AirTile())
+      this.setNewPosition(newX, newY)
+      map.setTileAtPosition(this.x, this.y, new PlayerTile())
+    }
   }
 
   private setNewPosition(newX: number, newY: number) {
