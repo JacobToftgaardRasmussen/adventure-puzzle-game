@@ -1,14 +1,16 @@
+import { AirTile, PlayerTile, WallTile, BoxTile, SandTile, RockTile, LockTile, KeyTile } from "./tile"
+
 export class TileCreator {
   public constructor() { }
   createTile(type: string) {
-    if (type === 'a') return '#112233' //Update this to return actual Tiles
-    if (type === 'p') return '#222233' //Update this to return actual Tiles
-    if (type === 'w') return '#332233' //Update this to return actual Tiles
-    if (type === 'b') return '#442233' //Update this to return actual Tiles
-    if (type === 's') return '#552233' //Update this to return actual Tiles
-    if (type === 'r') return '#992233' //Update this to return actual Tiles
-    if (type === 'l') return '#102233' //Update this to return actual Tiles
-    if (type === 'k') return '#112233' //Update this to return actual Tiles
-    else return '#112233' //Update this to return actual Tiles
+    if (type === 'a') return new AirTile()
+    if (type === 'p') return new PlayerTile()
+    if (type === 'w') return new WallTile()
+    if (type === 'b') return new BoxTile()
+    if (type === 's') return new SandTile()
+    if (type === 'r') return new RockTile()
+    if (type === 'l') return new LockTile()
+    if (type === 'k') return new KeyTile()
+    else return new AirTile()
   }
 }

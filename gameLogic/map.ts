@@ -1,4 +1,4 @@
-import { TILE_SIZE } from "./gameConstants"
+import { Tile } from "./tile"
 import { TileCreator } from "./tileCreator"
 
 const rawMap: string[][] = [
@@ -11,7 +11,7 @@ const rawMap: string[][] = [
 ]
 export class Map {
   private tileCreator: TileCreator
-  private map: string[][] // Update this to be Tile[][]
+  private map: Tile[][] // Update this to be Tile[][]
 
   constructor(tileCreator: TileCreator) {
     this.tileCreator = tileCreator
@@ -29,8 +29,7 @@ export class Map {
     for (let y = 0; y < this.map.length; y++) {
       for (let x = 0; x < this.map[y].length; x++) {
         let currentTile = this.map[y][x]
-        g.fillStyle = currentTile
-        g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+        currentTile.drawItselfOnTheMap(g, x, y)
       }
     }
   }
