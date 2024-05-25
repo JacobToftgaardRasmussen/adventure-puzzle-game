@@ -2,12 +2,14 @@ import { Direction, Movement, TILE_SIZE } from "./gameConstants";
 import { Map } from "./map";
 
 export interface Tile {
+  fallDown(map: Map, x: number, y: number): void
   isAir(): boolean
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean
 }
 
 export class PlayerTile implements Tile {
+  fallDown(): void { }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return false }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {
@@ -18,6 +20,7 @@ export class PlayerTile implements Tile {
 }
 
 export class WallTile implements Tile {
+  fallDown(): void { }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return false }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {
@@ -28,6 +31,11 @@ export class WallTile implements Tile {
 }
 
 export class BoxTile implements Tile {
+  fallDown(map: Map, x: number, y: number): void {
+    if (map.getTileAtPosition(x, y + 1).isAir()) {
+      map.letTileFall(x, y, this)
+    }
+  }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean {
     if (direction == Direction.Horizontal && map.getTileAtPosition(x + movement, y).isAir()) {
@@ -42,6 +50,11 @@ export class BoxTile implements Tile {
 }
 
 export class RockTile implements Tile {
+  fallDown(map: Map, x: number, y: number): void {
+    if (map.getTileAtPosition(x, y + 1).isAir()) {
+      map.letTileFall(x, y, this)
+    }
+  }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean {
     if (direction == Direction.Horizontal && map.getTileAtPosition(x + movement, y).isAir()) {
@@ -56,6 +69,7 @@ export class RockTile implements Tile {
 }
 
 export class SandTile implements Tile {
+  fallDown(): void { }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return true }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {
@@ -66,6 +80,7 @@ export class SandTile implements Tile {
 }
 
 export class LockTile implements Tile {
+  fallDown(): void { }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return false }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {
@@ -76,6 +91,7 @@ export class LockTile implements Tile {
 }
 
 export class KeyTile implements Tile {
+  fallDown(): void { }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return true }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {
@@ -86,6 +102,7 @@ export class KeyTile implements Tile {
 }
 
 export class AirTile implements Tile {
+  fallDown(): void { }
   isAir(): boolean { return true }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return true }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {

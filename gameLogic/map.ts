@@ -1,5 +1,5 @@
 import { Direction, Movement } from "./gameConstants"
-import { Tile } from "./tile"
+import { AirTile, Tile } from "./tile"
 import { TileCreator } from "./tileCreator"
 
 const rawMap: string[][] = [
@@ -31,6 +31,7 @@ export class Map {
     for (let y = 0; y < this.map.length; y++) {
       for (let x = 0; x < this.map[y].length; x++) {
         let currentTile = this.map[y][x]
+        currentTile.fallDown(this, x, y)
         currentTile.drawItselfOnTheMap(g, x, y)
       }
     }
@@ -47,6 +48,11 @@ export class Map {
 
   public getTileAtPosition(x: number, y: number) {
     return this.map[y][x]
+  }
+
+  public letTileFall(x: number, y: number, tile: Tile) {
+    this.map[y][x] = new AirTile()
+    this.map[y + 1][x] = tile
   }
 
   public getPositionOfUniqueTile(rawTileType: string) {
