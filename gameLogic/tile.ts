@@ -10,10 +10,10 @@ export interface Tile {
 }
 
 export class PlayerTile implements Tile {
-  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void { }
+  respondToPlayerMovement(): void { }
   fallDown(): void { }
   isAir(): boolean { return false }
-  canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return false }
+  canBeMovedTo(_direction: Direction,): boolean { return false }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {
     const sprite = document.getElementById('playerSprite') as CanvasImageSource
     if (sprite)
@@ -22,10 +22,10 @@ export class PlayerTile implements Tile {
 }
 
 export class WallTile implements Tile {
-  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void { }
+  respondToPlayerMovement(): void { }
   fallDown(): void { }
   isAir(): boolean { return false }
-  canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return false }
+  canBeMovedTo(_direction: Direction,): boolean { return false }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {
     const sprite = document.getElementById('wallSprite') as CanvasImageSource
     if (sprite)
@@ -82,10 +82,10 @@ export class RockTile implements Tile {
 }
 
 export class SandTile implements Tile {
-  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void { }
+  respondToPlayerMovement(): void { }
   fallDown(): void { }
   isAir(): boolean { return false }
-  canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return true }
+  canBeMovedTo(_direction: Direction,): boolean { return true }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {
     const sprite = document.getElementById('sandSprite') as CanvasImageSource
     if (sprite)
@@ -94,10 +94,10 @@ export class SandTile implements Tile {
 }
 
 export class LockTile implements Tile {
-  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void { }
+  respondToPlayerMovement(): void { }
   fallDown(): void { }
   isAir(): boolean { return false }
-  canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return false }
+  canBeMovedTo(_direction: Direction,): boolean { return false }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {
     const sprite = document.getElementById('lockSprite') as CanvasImageSource
     if (sprite)
@@ -106,13 +106,13 @@ export class LockTile implements Tile {
 }
 
 export class KeyTile implements Tile {
-  respondToPlayerMovement(_x: number, _y: number, map: Map, movement: Movement): void {
+  respondToPlayerMovement(_x: number, _y: number, map: Map): void {
     const { x, y } = map.getPositionOfUniqueTile('l')
     map.setTileAtPosition(x, y, new AirTile())
   }
   fallDown(): void { }
   isAir(): boolean { return false }
-  canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return true }
+  canBeMovedTo(_direction: Direction,): boolean { return true }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {
     const sprite = document.getElementById('keySprite') as CanvasImageSource
     if (sprite)
@@ -121,10 +121,10 @@ export class KeyTile implements Tile {
 }
 
 export class AirTile implements Tile {
-  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void { }
+  respondToPlayerMovement(): void { }
   fallDown(): void { }
   isAir(): boolean { return true }
-  canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return true }
+  canBeMovedTo(_direction: Direction,): boolean { return true }
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void {
     g.fillStyle = '#fff'
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
