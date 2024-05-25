@@ -21,6 +21,7 @@ export class Player {
 
     if (map.tileCanBeMovedTo(newX, newY, input.direction, input.movement)) {
       map.setTileAtPosition(this.x, this.y, new AirTile())
+      map.updateTileToMoveTo(newX, newY, input.movement)
       this.setNewPosition(newX, newY)
       map.setTileAtPosition(this.x, this.y, new PlayerTile())
     }

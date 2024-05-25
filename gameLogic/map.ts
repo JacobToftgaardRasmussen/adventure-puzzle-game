@@ -41,6 +41,11 @@ export class Map {
     this.map[y][x] = tile
   }
 
+  public updateTileToMoveTo(x: number, y: number, movement: Movement) {
+    const tileToMoveTo = this.map[y][x]
+    tileToMoveTo.respondToPlayerMovement(x, y, this, movement)
+  }
+
   public tileCanBeMovedTo(x: number, y: number, direction: Direction, movement: Movement): boolean {
     const tileToMoveTo = this.map[y][x]
     return tileToMoveTo.canBeMovedTo(x, y, this, direction, movement)

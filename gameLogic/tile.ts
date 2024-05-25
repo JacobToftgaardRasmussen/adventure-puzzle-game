@@ -2,6 +2,7 @@ import { Direction, Movement, TILE_SIZE } from "./gameConstants";
 import { Map } from "./map";
 
 export interface Tile {
+  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void
   fallDown(map: Map, x: number, y: number): void
   isAir(): boolean
   drawItselfOnTheMap(g: CanvasRenderingContext2D, x: number, y: number): void
@@ -9,6 +10,7 @@ export interface Tile {
 }
 
 export class PlayerTile implements Tile {
+  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void { }
   fallDown(): void { }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return false }
@@ -20,6 +22,7 @@ export class PlayerTile implements Tile {
 }
 
 export class WallTile implements Tile {
+  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void { }
   fallDown(): void { }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return false }
@@ -31,6 +34,11 @@ export class WallTile implements Tile {
 }
 
 export class BoxTile implements Tile {
+  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void {
+    const newX = x + movement
+    map.setTileAtPosition(x, y, new AirTile())
+    map.setTileAtPosition(newX, y, new BoxTile())
+  }
   fallDown(map: Map, x: number, y: number): void {
     if (map.getTileAtPosition(x, y + 1).isAir()) {
       map.letTileFall(x, y, this)
@@ -50,6 +58,11 @@ export class BoxTile implements Tile {
 }
 
 export class RockTile implements Tile {
+  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void {
+    const newX = x + movement
+    map.setTileAtPosition(x, y, new AirTile())
+    map.setTileAtPosition(newX, y, new RockTile())
+  }
   fallDown(map: Map, x: number, y: number): void {
     if (map.getTileAtPosition(x, y + 1).isAir()) {
       map.letTileFall(x, y, this)
@@ -69,6 +82,7 @@ export class RockTile implements Tile {
 }
 
 export class SandTile implements Tile {
+  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void { }
   fallDown(): void { }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return true }
@@ -80,6 +94,7 @@ export class SandTile implements Tile {
 }
 
 export class LockTile implements Tile {
+  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void { }
   fallDown(): void { }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return false }
@@ -91,6 +106,10 @@ export class LockTile implements Tile {
 }
 
 export class KeyTile implements Tile {
+  respondToPlayerMovement(_x: number, _y: number, map: Map, movement: Movement): void {
+    const { x, y } = map.getPositionOfUniqueTile('l')
+    map.setTileAtPosition(x, y, new AirTile())
+  }
   fallDown(): void { }
   isAir(): boolean { return false }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return true }
@@ -102,6 +121,7 @@ export class KeyTile implements Tile {
 }
 
 export class AirTile implements Tile {
+  respondToPlayerMovement(x: number, y: number, map: Map, movement: Movement): void { }
   fallDown(): void { }
   isAir(): boolean { return true }
   canBeMovedTo(x: number, y: number, map: Map, direction: Direction, movement: Movement): boolean { return true }
