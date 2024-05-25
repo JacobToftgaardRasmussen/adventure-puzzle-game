@@ -33,4 +33,17 @@ export class Map {
       }
     }
   }
+
+  public setTileAtPosition(x: number, y: number, tile: Tile) {
+    this.map[y][x] = tile
+  }
+
+  public getPositionOfUniqueTile(rawTileType: string) {
+    for (let y = 0; y < rawMap.length; y++) {
+      for (let x = 0; x < rawMap[y].length; x++) {
+        if (rawMap[y][x] === rawTileType) return { x, y }
+      }
+    }
+    throw new Error('Player was not found on the raw map')
+  }
 }

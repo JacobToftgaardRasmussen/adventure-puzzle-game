@@ -1,6 +1,7 @@
 import { SLEEP } from "./gameConstants"
 import { Left, Up, Right, Down, Input } from "./input"
 import { Map } from "./map"
+import { Player } from "./player"
 import { TileCreator } from "./tileCreator"
 
 let inputs: Input[] = []
@@ -13,23 +14,25 @@ function createGraphics() {
   } else throw Error('Canvas was not found on the page')
 }
 
-function gameLoop(map: Map, g: CanvasRenderingContext2D) {
+function gameLoop(player: Player, map: Map, g: CanvasRenderingContext2D) {
   let before = Date.now()
   g.clearRect(0, 0, 600, 400)
-  inputs.forEach(input => console.log(input.constructor.name))
+  player.handleInputs(inputs, map)
   map.drawItself(g)
   inputs = []
   let after = Date.now()
   let frameTime = after - before
   let sleep = SLEEP - frameTime
-  setTimeout(() => { gameLoop(map, g) }, sleep);
+  setTimeout(() => { gameLoop(player, map, g) }, sleep);
 }
 
 window.onload = () => {
   const g = createGraphics()
   const tileCreator = new TileCreator()
   const map = new Map(tileCreator)
-  gameLoop(map, g)
+  const { x, y } = map.getPositionOfUniqueTile('p')
+  const player = new Player(x, y)
+  gameLoop(player, map, g)
 }
 
 const LEFT_KEY = 'ArrowLeft'
